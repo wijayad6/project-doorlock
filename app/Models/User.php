@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Fungsi untuk relasi ke Model Absensi
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'user_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Absensi;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Fungsi untuk mencatat absensi login
+        Absensi::create([
+            'user_id' => Auth::id(), 
+            'status'  => 'login', 
+            'waktu'   => now(),
+        ]);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -37,6 +45,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // Fungsi untuk mencatat absensi logout
+        Absensi::create([
+            'user_id' => Auth::id(), 
+            'status'  => 'logout', 
+            'waktu'   => now(),
+        ]);
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
