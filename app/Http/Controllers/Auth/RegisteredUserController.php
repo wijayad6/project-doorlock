@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -40,6 +41,13 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        // Fungsi untuk mencatat absensi login
+        Absensi::create([
+            'user_id' => $user->id, 
+            'status'  => 'login', 
+            'waktu'   => now(),
         ]);
 
         event(new Registered($user));

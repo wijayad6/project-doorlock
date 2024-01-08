@@ -10,6 +10,30 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
+
+                    {{-- Tabel histori login start --}}
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold mb-2">Histori Absensi</h3>
+
+                        <table class="min-w-full border border-gray-300">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Waktu</th>
+                                    <th class="py-2 px-4 border-b">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($absensi as $item)
+                                    <tr>
+                                        <td class="py-2 px-4 border-b">{{ $item->waktu }}</td>
+                                        <td class="py-2 px-4 border-b">{{ ucfirst($item->status) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- Tabel histori login end --}}
+
                 </div>
             </div>
         </div>
